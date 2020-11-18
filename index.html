@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Design Pattern</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <style>
         body{
             font-family: 'Quicksand',serif;
@@ -19,7 +20,16 @@
 </head>
 <body>
     <h1>Design pattern front</h1>
+    <form>
+        <label for="speed">Speed:
+            <input type="text" id="speed" name="speed" value="10">
+            <button type="button" id="changeUp">Speed + 10</button>
+            <button type="button" id="changeDown">Speed - 10</button>
+            <button type="button" id="stopSpeed">Stop the Image</button>
+        </label>
+    </form>
     <img class="twitter-pic" src="https://i.pinimg.com/originals/28/90/ba/2890bac9ba41e52707f36268231dfe9e.png" alt="twi logo" >
     <script src="js/exercice7.js"></script>
+
 </body>
 </html>

@@ -17,22 +17,36 @@ document.addEventListener('keydown', function (e){
         imageManager.execute(e.code)
     }
 })
-
+changeUp.addEventListener('click', function() {
+    imageManager.speed = imageManager.speed + 10;
+});
+changeDown.addEventListener('click', function() {
+    imageManager.speed = imageManager.speed - 10;
+});
+stopSpeed.addEventListener('click', function() {
+    imageManager.speed = 0;
+});
 let imageManager = {
+
     image: document.querySelector('.twitter-pic'),
+    speed: parseInt(document.querySelector('#speed').value),
+
     ArrowUp: function(){
-        this.image.style.top = this.image.offsetTop - 10 + 'px'
+        console.log(this.speed)
+        this.image.style.top = this.image.offsetTop - parseInt(this.speed) + 'px'
     },
     ArrowLeft: function(){
-        this.image.style.left = this.image.offsetLeft - 10 + 'px'
+        this.image.style.left = this.image.offsetLeft - parseInt(this.speed) + 'px'
     },
     ArrowRight: function(){
-        this.image.style.left = this.image.offsetLeft + 10 + 'px'
+        this.image.style.left = this.image.offsetLeft + parseInt(this.speed) + 'px'
     },
     ArrowDown: function(){
-        this.image.style.top = this.image.offsetTop + 10 + 'px'
+        this.image.style.top = this.image.offsetTop + parseInt(this.speed) + 'px'
     }
+
 }
+
 
 imageManager.execute = function (key) {
     let methodName = imageManager[key]
