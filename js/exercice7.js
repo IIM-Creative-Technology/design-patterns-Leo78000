@@ -39,9 +39,20 @@ imageManager.execute = function (key) {
     return methodName.apply(imageManager)
 }
 
-const getRandom = (min, max) => Math.floor(Math.random() * max) + min
+const methods = ['ArrowUp', 'ArrowLeft', 'ArrowRight', 'ArrowDown']
+let randomMethodKey, methodToExecute
+
+setInterval(function () {
+    //  add a random move
+    randomMethodKey = Math.floor((Math.random() * 4))
+    methodToExecute = methods[randomMethodKey]
+    imageManager.execute(methodToExecute)
+}, 500)
+
+
+/* const getRandom = (min, max) => Math.floor(Math.random() * max) + min
 const image = document.querySelector('.twitter-pic');
 setInterval(() => {
-    image.style.left= getRandom(0, 300)+'px';
-    image.style.top = getRandom(0, 300)+'px';
-}, 500);
+    image.style.left= getRandom(0, 1000)+'px';
+    image.style.top = getRandom(0, 1000)+'px';
+}, 500); */
