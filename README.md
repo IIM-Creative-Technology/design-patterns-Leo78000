@@ -1,2 +1,2 @@
 # design-patterns-Leo78000
-Code exo 7
+Codes des exercices + du TD FINAL
