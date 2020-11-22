@@ -119,7 +119,7 @@ document.querySelector("#stations").addEventListener('change',function(){
 
 
     // Mise en place de l'interval
-    var x = setInterval(function(){
+    setInterval(function(){
     async function fetchTime(line, station) {
         fetch('https://api-ratp.pierre-grimaud.fr/v4/schedules/metros' + '/' + line + '/' + station  +  '/A+R')
             .then(response => {
@@ -156,8 +156,7 @@ document.querySelector("#stations").addEventListener('change',function(){
         var nom_stations = document.querySelector('#stations').value;
         console.log(num_sta,nom_stations)
         fetchTime(num_sta,nom_stations)
-        clearInterval(x)
-    },3000)
+    },30000)
 })
 
 
