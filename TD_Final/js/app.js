@@ -1,3 +1,4 @@
+var x = null
 function fetchMetro(){
     fetch('https://api-ratp.pierre-grimaud.fr/v4/lines/metros')
         .then(response => {
@@ -16,7 +17,7 @@ function fetchMetro(){
                 })
                 .join("");
 
-            document.querySelector("#metro").insertAdjacentHTML("beforeend",html);
+            document.querySelector("#metro").innerHTML = html;
         })
         .catch(error => {
             console.log(error);
@@ -67,9 +68,11 @@ document.querySelector("#metro").addEventListener('change', function(){
     })
     }
 
-    var index_stations = document.querySelector('#metro').selectedIndex;
+    var index_stations = document.querySelector('#metro').value;
+    var num_sta = index_stations.slice(-2);
+    num_sta = num_sta.replace(/\s+/g, '')
     console.log(index_stations)
-    fetchStation(index_stations+1);
+    fetchStation(num_sta);
 })
 
 document.querySelector("#stations").addEventListener('change',function(){
@@ -87,30 +90,75 @@ document.querySelector("#stations").addEventListener('change',function(){
                 const html = data.result.schedules
                     .map(result =>{
                         return `
-                    <div style="display:flex;">
-                    <li style="width:50%">${result.message} </li>                
-                    <li style="width:50%">${result.destination}</li>   
-                    <br>            
-                    </div>
+                            <div style="display:flex;">
+                                <li style="width:50%">${result.message} </li>                
+                                <li style="width:50%">${result.destination}</li>   
+                                <br>            
+                            </div>
                     `;
                     })
                     .join("");
-                    document.querySelector("#time-list").innerHTML = ('<b>Destination & prochain train :</b>' +html);
+                document.querySelector("#time-list").innerHTML = ('<b>Destination & prochain train :</b>' + html);
             })
             .catch(error => {
                 console.log(error);
             })
+        var index_stations = document.querySelector('#metro').value
+        var num_sta = index_stations.slice(-2);
+        num_sta = num_sta.replace(/\s+/g, '')
+        var nom_stations = document.querySelector('#stations').value;
+        console.log(num_sta)
+        console.log(nom_stations)
+
     }
-    var index_stations = document.querySelector('#metro').selectedIndex;
+    var index_stations = document.querySelector('#metro').value
+    var num_sta = index_stations.slice(-2);
+    num_sta = num_sta.replace(/\s+/g, '')
     var nom_stations = document.querySelector('#stations').value;
-    console.log(index_stations)
-    console.log(nom_stations)
-    fetchTime(index_stations+1,nom_stations)
-     setInterval(function (){
-        fetchTime(index_stations+1,nom_stations)
-    }, 30000)
+    fetchTime(num_sta,nom_stations)
 
 
+    // Mise en place de l'interval
+    var x = setInterval(function(){
+    async function fetchTime(line, station) {
+        fetch('https://api-ratp.pierre-grimaud.fr/v4/schedules/metros' + '/' + line + '/' + station  +  '/A+R')
+            .then(response => {
+                if(!response.ok) {
+                    throw Error("ERROR");
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data)
 
+                const html = data.result.schedules
+                    .map(result =>{
+                        return `
+                            <div style="display:flex;">
+                                <li style="width:50%">${result.message} </li>                
+                                <li style="width:50%">${result.destination}</li>   
+                                <br>            
+                            </div>
+                    `;
+                    })
+                    .join("");
+                    document.querySelector("#time-list").innerHTML = ('<b>Destination & prochain train :</b>' + html);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+
+
+    }
+        var index_stations = document.querySelector('#metro').value
+        var num_sta = index_stations.slice(-2);
+        num_sta = num_sta.replace(/\s+/g, '')
+        var nom_stations = document.querySelector('#stations').value;
+        console.log(num_sta,nom_stations)
+        fetchTime(num_sta,nom_stations)
+        clearInterval(x)
+    },3000)
 })
+
+
 
